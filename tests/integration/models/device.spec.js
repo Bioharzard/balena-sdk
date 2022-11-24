@@ -2278,8 +2278,6 @@ describe('Device Model', function () {
 						expect(imageInstall).to.not.have.property('raw_version');
 					});
 
-					expect(deviceDetails.gateway_download).to.have.lengthOf(0);
-
 					// Augmented properties
 					// Should filter out deleted image installs
 					expect(deviceDetails.current_services.db).to.have.lengthOf(1);
@@ -2290,8 +2288,6 @@ describe('Device Model', function () {
 						expect(currentService).to.have.property('raw_version');
 						expect(currentService).to.have.property('release_id');
 					});
-					// Should have an empty list of gateway downloads
-					expect(deviceDetails.current_gateway_downloads).to.have.lengthOf(0);
 				});
 
 				it('should allow options to change the device fields returned', async function () {
