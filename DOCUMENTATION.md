@@ -69,6 +69,13 @@ If you feel something is missing, not clear or could be improved, please don't h
 <dd></dd>
 </dl>
 
+## Functions
+
+<dl>
+<dt><a href="#listImagesFromTargetState">listImagesFromTargetState(targetState)</a> ⇒</dt>
+<dd></dd>
+</dl>
+
 <a name="module_balena-sdk"></a>
 
 ## balena-sdk
@@ -265,7 +272,8 @@ const sdk = fromSharedOptions();
             * [.unsetCustomLocation(uuidOrIdOrIds)](#balena.models.device.unsetCustomLocation) ⇒ <code>Promise</code>
             * [.move(uuidOrIdOrIds, applicationSlugOrUuidOrId)](#balena.models.device.move) ⇒ <code>Promise</code>
             * [.restartApplication(uuidOrId)](#balena.models.device.restartApplication) ⇒ <code>Promise</code>
-            * [.getSupervisorTargetState(uuidOrId)](#balena.models.device.getSupervisorTargetState) ⇒ <code>Promise</code>
+            * [.getSupervisorTargetState(uuidOrId, version)](#balena.models.device.getSupervisorTargetState) ⇒ <code>Promise</code>
+            * [.getSupervisorTargetStateForApp(uuidOrId, release)](#balena.models.device.getSupervisorTargetStateForApp) ⇒ <code>Promise</code>
             * ~~[.getManifestBySlug(slugOrName)](#balena.models.device.getManifestBySlug) ⇒ <code>Promise</code>~~
             * ~~[.getManifestByApplication(slugOrUuidOrId)](#balena.models.device.getManifestByApplication) ⇒ <code>Promise</code>~~
             * [.generateUniqueKey()](#balena.models.device.generateUniqueKey) ⇒ <code>String</code>
@@ -360,6 +368,7 @@ const sdk = fromSharedOptions();
             * [.isSupportedOsUpdate(deviceType, currentVersion, targetVersion)](#balena.models.os.isSupportedOsUpdate) ⇒ <code>Promise</code>
             * [.getSupportedOsUpdateVersions(deviceType, currentVersion)](#balena.models.os.getSupportedOsUpdateVersions) ⇒ <code>Promise</code>
             * [.isArchitectureCompatibleWith(osArchitecture, applicationArchitecture)](#balena.models.os.isArchitectureCompatibleWith) ⇒ <code>Boolean</code>
+            * [.getSupervisorImageForDT(deviceTypeId, version)](#balena.models.os.getSupervisorImageForDT) ⇒ <code>Promise.&lt;String&gt;</code>
         * [.config](#balena.models.config) : <code>object</code>
             * [.getAll()](#balena.models.config.getAll) ⇒ <code>Promise</code>
             * ~~[.getDeviceTypes()](#balena.models.config.getDeviceTypes) ⇒ <code>Promise</code>~~
@@ -666,7 +675,8 @@ balena.models.device.get(123).catch(function (error) {
         * [.unsetCustomLocation(uuidOrIdOrIds)](#balena.models.device.unsetCustomLocation) ⇒ <code>Promise</code>
         * [.move(uuidOrIdOrIds, applicationSlugOrUuidOrId)](#balena.models.device.move) ⇒ <code>Promise</code>
         * [.restartApplication(uuidOrId)](#balena.models.device.restartApplication) ⇒ <code>Promise</code>
-        * [.getSupervisorTargetState(uuidOrId)](#balena.models.device.getSupervisorTargetState) ⇒ <code>Promise</code>
+        * [.getSupervisorTargetState(uuidOrId, version)](#balena.models.device.getSupervisorTargetState) ⇒ <code>Promise</code>
+        * [.getSupervisorTargetStateForApp(uuidOrId, release)](#balena.models.device.getSupervisorTargetStateForApp) ⇒ <code>Promise</code>
         * ~~[.getManifestBySlug(slugOrName)](#balena.models.device.getManifestBySlug) ⇒ <code>Promise</code>~~
         * ~~[.getManifestByApplication(slugOrUuidOrId)](#balena.models.device.getManifestByApplication) ⇒ <code>Promise</code>~~
         * [.generateUniqueKey()](#balena.models.device.generateUniqueKey) ⇒ <code>String</code>
@@ -761,6 +771,7 @@ balena.models.device.get(123).catch(function (error) {
         * [.isSupportedOsUpdate(deviceType, currentVersion, targetVersion)](#balena.models.os.isSupportedOsUpdate) ⇒ <code>Promise</code>
         * [.getSupportedOsUpdateVersions(deviceType, currentVersion)](#balena.models.os.getSupportedOsUpdateVersions) ⇒ <code>Promise</code>
         * [.isArchitectureCompatibleWith(osArchitecture, applicationArchitecture)](#balena.models.os.isArchitectureCompatibleWith) ⇒ <code>Boolean</code>
+        * [.getSupervisorImageForDT(deviceTypeId, version)](#balena.models.os.getSupervisorImageForDT) ⇒ <code>Promise.&lt;String&gt;</code>
     * [.config](#balena.models.config) : <code>object</code>
         * [.getAll()](#balena.models.config.getAll) ⇒ <code>Promise</code>
         * ~~[.getDeviceTypes()](#balena.models.config.getDeviceTypes) ⇒ <code>Promise</code>~~
@@ -2590,7 +2601,8 @@ balena.models.application.revokeSupportAccess('myorganization/myapp', function(e
     * [.unsetCustomLocation(uuidOrIdOrIds)](#balena.models.device.unsetCustomLocation) ⇒ <code>Promise</code>
     * [.move(uuidOrIdOrIds, applicationSlugOrUuidOrId)](#balena.models.device.move) ⇒ <code>Promise</code>
     * [.restartApplication(uuidOrId)](#balena.models.device.restartApplication) ⇒ <code>Promise</code>
-    * [.getSupervisorTargetState(uuidOrId)](#balena.models.device.getSupervisorTargetState) ⇒ <code>Promise</code>
+    * [.getSupervisorTargetState(uuidOrId, version)](#balena.models.device.getSupervisorTargetState) ⇒ <code>Promise</code>
+    * [.getSupervisorTargetStateForApp(uuidOrId, release)](#balena.models.device.getSupervisorTargetStateForApp) ⇒ <code>Promise</code>
     * ~~[.getManifestBySlug(slugOrName)](#balena.models.device.getManifestBySlug) ⇒ <code>Promise</code>~~
     * ~~[.getManifestByApplication(slugOrUuidOrId)](#balena.models.device.getManifestByApplication) ⇒ <code>Promise</code>~~
     * [.generateUniqueKey()](#balena.models.device.generateUniqueKey) ⇒ <code>String</code>
@@ -3988,7 +4000,7 @@ balena.models.device.restartApplication('7cf02a6', function(error) {
 ```
 <a name="balena.models.device.getSupervisorTargetState"></a>
 
-##### device.getSupervisorTargetState(uuidOrId) ⇒ <code>Promise</code>
+##### device.getSupervisorTargetState(uuidOrId, version) ⇒ <code>Promise</code>
 **Kind**: static method of [<code>device</code>](#balena.models.device)  
 **Summary**: Get the target supervisor state on a device  
 **Access**: public  
@@ -3996,6 +4008,7 @@ balena.models.device.restartApplication('7cf02a6', function(error) {
 | Param | Type | Description |
 | --- | --- | --- |
 | uuidOrId | <code>String</code> \| <code>Number</code> | device uuid (string) or id (number) |
+| version | <code>Number</code> | (optional) target state version (2 or 3), default to 2 |
 
 **Example**  
 ```js
@@ -4011,8 +4024,44 @@ balena.models.device.getSupervisorTargetState(123).then(function(state) {
 ```
 **Example**  
 ```js
+balena.models.device.getSupervisorTargetState(123, 3).then(function(state) {
+	console.log(state);
+});
+```
+**Example**  
+```js
 balena.models.device.getSupervisorTargetState('7cf02a6', function(error, state) {
 	if (error) throw error;
+	console.log(state);
+});
+```
+<a name="balena.models.device.getSupervisorTargetStateForApp"></a>
+
+##### device.getSupervisorTargetStateForApp(uuidOrId, release) ⇒ <code>Promise</code>
+**Kind**: static method of [<code>device</code>](#balena.models.device)  
+**Summary**: Get the target supervisor state on a "generic" device on a fleet  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| uuidOrId | <code>String</code> \| <code>Number</code> | fleet uuid (string) or id (number) |
+| release | <code>String</code> | (optional) release uuid (default tracked) |
+
+**Example**  
+```js
+balena.models.device.getSupervisorTargetStateForApp('7cf02a6').then(function(state) {
+	console.log(state);
+});
+```
+**Example**  
+```js
+balena.models.device.getSupervisorTargetStateForApp(123).then(function(state) {
+	console.log(state);
+});
+```
+**Example**  
+```js
+balena.models.device.getSupervisorTargetStateForApp(123, '7cf02a6').then(function(state) {
 	console.log(state);
 });
 ```
@@ -6286,6 +6335,7 @@ balena.models.organization.remove(123, function(error) {
     * [.isSupportedOsUpdate(deviceType, currentVersion, targetVersion)](#balena.models.os.isSupportedOsUpdate) ⇒ <code>Promise</code>
     * [.getSupportedOsUpdateVersions(deviceType, currentVersion)](#balena.models.os.getSupportedOsUpdateVersions) ⇒ <code>Promise</code>
     * [.isArchitectureCompatibleWith(osArchitecture, applicationArchitecture)](#balena.models.os.isArchitectureCompatibleWith) ⇒ <code>Boolean</code>
+    * [.getSupervisorImageForDT(deviceTypeId, version)](#balena.models.os.getSupervisorImageForDT) ⇒ <code>Promise.&lt;String&gt;</code>
 
 <a name="balena.models.os.getAvailableOsVersions"></a>
 
@@ -6553,6 +6603,24 @@ console.log(result1);
 
 const result2 = balena.models.os.isArchitectureCompatibleWith('armv7hf', 'amd64');
 console.log(result2);
+```
+<a name="balena.models.os.getSupervisorImageForDT"></a>
+
+##### os.getSupervisorImageForDT(deviceTypeId, version) ⇒ <code>Promise.&lt;String&gt;</code>
+**Kind**: static method of [<code>os</code>](#balena.models.os)  
+**Summary**: Returns image name for a specific supervisor version for a Device Type  
+**Returns**: <code>Promise.&lt;String&gt;</code> - - Docker image name for the Supervisor version and arch  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| deviceTypeId | <code>Number</code> | The Id for the Device Type |
+| version | <code>String</code> | The semver version string for the supervisor |
+
+**Example**  
+```js
+const result = balena.models.os.getSupervisorImageForDT(60, 'v12.11.0').then(result => console.log(result))
+// 60 would be raspberrypi4-64 on balena-cloud
 ```
 <a name="balena.models.config"></a>
 
@@ -8386,3 +8454,13 @@ balena.settings.getAll(function(error, settings) {
 
 ### balena.utils : <code>object</code>
 **Kind**: static namespace of [<code>balena</code>](#balena)  
+<a name="listImagesFromTargetState"></a>
+
+## listImagesFromTargetState(targetState) ⇒
+**Kind**: global function  
+**Returns**: array containing all images for all services for all releases for all apps for the device  
+
+| Param |
+| --- |
+| targetState | 
+
