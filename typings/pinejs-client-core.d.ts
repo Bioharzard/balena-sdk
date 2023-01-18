@@ -315,7 +315,7 @@ export type ResourceExpand<T> = {
 };
 
 type ResourceExpandWithSelect<T> = {
-	[k in ExpandableProps<T>]?: ODataOptionsWithSelect<
+	[k in ExpandableProps<T>]?: ODataOptionsStrict<
 		InferAssociatedResourceType<T[k]>
 	>;
 };
@@ -349,8 +349,7 @@ export interface ODataOptionsWithCount<T> extends ODataOptionsWithoutCount<T> {
 	$count: NonNullable<ODataCountOptions<T>>;
 }
 
-// TODO: Rename to ODataOptionsStrict on the next major
-export type ODataOptionsWithSelect<T> = Omit<
+export type ODataOptionsStrict<T> = Omit<
 	ODataOptions<T>,
 	'$select' | '$expand' | '$count'
 > &
@@ -406,7 +405,7 @@ export interface ParamsObjWithCount<T> extends ParamsObj<T> {
 }
 
 export type ParamsObjStrict<T> = Omit<ParamsObj<T>, 'options'> & {
-	options: ODataOptionsWithSelect<T>;
+	options: ODataOptionsStrict<T>;
 };
 
 export interface ParamsObjWithFilter<T> extends ParamsObj<T> {
