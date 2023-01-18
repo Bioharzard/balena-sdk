@@ -1057,7 +1057,7 @@ const getDeviceModel = function (
 
 		/**
 		 * @summary Note a device
-		 * @name note
+		 * @name setNote
 		 * @public
 		 * @function
 		 * @memberof balena.models.device
@@ -1068,17 +1068,17 @@ const getDeviceModel = function (
 		 * @returns {Promise}
 		 *
 		 * @example
-		 * balena.models.device.note('7cf02a6', 'My useful note');
+		 * balena.models.device.setNote('7cf02a6', 'My useful note');
 		 *
 		 * @example
-		 * balena.models.device.note(123, 'My useful note');
+		 * balena.models.device.setNote(123, 'My useful note');
 		 *
 		 * @example
-		 * balena.models.device.note('7cf02a6', 'My useful note', function(error) {
+		 * balena.models.device.setNote('7cf02a6', 'My useful note', function(error) {
 		 * 	if (error) throw error;
 		 * });
 		 */
-		note: async (
+		setNote: async (
 			uuidOrIdOrIds: string | number | number[],
 			note: string,
 		): Promise<void> => {
