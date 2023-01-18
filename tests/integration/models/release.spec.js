@@ -461,12 +461,12 @@ describe('Release Model', function () {
 			});
 		});
 
-		describe('balena.models.release.note()', function () {
+		describe('balena.models.release.setNote()', function () {
 			releaseRetrievalFields.forEach((field) => {
 				it(`should set a note using the release ${field}`, async function () {
 					const release = ctx.currentRelease;
 					const note = `This is a note set using field: ${field}`;
-					await balena.models.release.note(release[field], note);
+					await balena.models.release.setNote(release[field], note);
 					const updatedRelease = await balena.models.release.get(release.id, {
 						$select: ['id', 'note'],
 					});
