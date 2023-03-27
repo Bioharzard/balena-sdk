@@ -59,11 +59,11 @@ describe('Release Model', function () {
 
 		parallel('balena.models.release.getAllByApplication()', function () {
 			applicationRetrievalFields.forEach((prop) =>
-				it(`should eventually become an empty array given an application ${prop}`, function () {
-					const promise = balena.models.release.getAllByApplication(
+				it(`should eventually become an empty array given an application ${prop}`, async function () {
+					const result = await balena.models.release.getAllByApplication(
 						ctx.application[prop],
 					);
-					return expect(promise).to.become([]);
+					expect(result).to.deep.equal([]);
 				}),
 			);
 
